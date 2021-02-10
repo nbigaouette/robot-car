@@ -1,0 +1,16 @@
+[package]
+name = "spot"
+version = "0.1.0"
+authors = ["Nicolas Bigaouette <nbigaouette@gmail.com>"]
+edition = "2018"
+
+# Based on https://github.com/Rahix/avr-hal/blob/b1aedf8/README.md#starting-your-own-project
+
+[dependencies]
+# A panic handler is needed.  This is a crate with the most basic one.
+# The `leonardo-panic` example shows a more elaborate version.
+panic-halt = "0.2.0"
+
+[dependencies.arduino-uno]
+git = "https://github.com/rahix/avr-hal"
+rev = "b1aedf8"
