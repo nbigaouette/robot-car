@@ -59,4 +59,4 @@ printf "\n"
 printf "Attempting to flash ...\n"
 printf "\n"
 
-avrdude -q  -patmega328p -carduino -P"${SERIAL_PORT}" -D "-Uflash:w:$1:e"
+avrdude -p atmega328p -c arduino -P "${SERIAL_PORT}" -D "-Uflash:w:$1:e"
