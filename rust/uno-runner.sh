@@ -1,6 +1,9 @@
 #!/usr/bin/env sh
 set -e
 
+# 'numfmt' is from homebrew's "coreutils" package, which is not linked.
+PATH="/usr/local/opt/coreutils/libexec/gnubin:${PATH}"
+
 case "$(uname -s)" in
     Linux*)     OS="Linux";;
     Darwin*)    OS="Mac";;
