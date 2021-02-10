@@ -1,0 +1,38 @@
+Smart robot car code  Use Guide
+Please read below information before you use the Smart robot car.
+
+1,Smart robot car comprehensive_Experiment
+
+1) comprehensive_Experiment code file
+
+--This code file includes 2 modes, which are remote control experiment and bluetooth control experiment. Each mode could control the robot car, and realize the ultrasonic obstacle avoidance experiment, infrared ray circuit experiment and infrared ray follow experiment.
+
+Remote control experiment is the default mode, robot is controled by remote. It could changed to bluetooth control mode by clicking the KEY 1 button on the chassis. It could connected with your smart device, then open the App and click bluebooth search, there will be downward arrow on the right side of the search, which is the ID of bluetooth device, you could choose to connect and then start to control the robot car.
+
+2£©Other fils are the library files that the code requires
+
+2£¬Smart robot car single functional experiment 
+
+Each test code needs to be uploaded to the UNO control board before it can be implemented. Press KEY 1 to notify the car to start running before you run
+
+The interior includes single function experiments
+
+1) Smart robot car comprehensive experiment on all sides
+2) Smart robot car specify fancy moves
+3)Smart robot car ultrasonic obstacle avoidance experiment
+4)Smart robot car black tracking experiment
+5)Smart robot car Remote_contorl
+6.1)Smart robot car infrared obstacle avoidance experiment
+6.2) Smart robot car infrared and obstacle experiment
+
+
+3£¬Test IR_remote_code_values
+
+The main function of this file is to test the code value for each key of the remote control
+
+
+
+
+***********
+Attention£º
+Before uploading any code, please remove the Bluetooth module, to avoid the use of serial port which could lead to upload failed.
