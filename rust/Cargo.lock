@@ -81,6 +81,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "infrared"
+version = "0.10.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9e274583c86fb45108e18483e0845691f2e3ed2d73e16dc4b4153dd9483d405e"
+dependencies = [
+ "embedded-hal",
+ "nb 1.0.0",
+]
+
+[[package]]
 name = "nb"
 version = "0.1.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -160,6 +170,7 @@ name = "spot"
 version = "0.1.0"
 dependencies = [
  "arduino-uno",
+ "infrared",
  "panic-halt",
 ]
 
