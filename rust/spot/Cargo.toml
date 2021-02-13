@@ -11,6 +11,8 @@ edition = "2018"
 # The `leonardo-panic` example shows a more elaborate version.
 panic-halt = "0.2.0"
 
+ufmt = "0.1"
+
 infrared = "0.10"
 
 [dependencies.arduino-uno]

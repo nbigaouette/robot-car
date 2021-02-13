@@ -172,6 +172,7 @@ dependencies = [
  "arduino-uno",
  "infrared",
  "panic-halt",
+ "ufmt",
 ]
 
 [[package]]
