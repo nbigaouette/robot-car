@@ -1,0 +1,22 @@
+{
+    "cSpell.words": [
+        "PORTB",
+        "PORTC",
+        "PORTD",
+        "SAMPLERATE",
+        "Usart",
+        "baudrate",
+        "remotecontrol",
+        "ufmt",
+        "uwrite",
+        "uwriteln"
+    ],
+    "rust-analyzer.files.excludeDirs": [
+        "initial_code"
+    ],
+    "rust-analyzer.checkOnSave.allTargets": false,
+    "rust-analyzer.checkOnSave.extraArgs": [
+        "--target",
+        "avr-atmega328p.json"
+    ],
+}
