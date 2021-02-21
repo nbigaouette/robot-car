@@ -93,64 +93,9 @@ fn main() -> ! {
 
     init_timer_tc0(dp.TC0);
 
-    // ================================================================================
-    /*
-    // From IRremote.cpp, line 276
-    cli();
-    setup pulse clock timer interrupt
-    Prescale /8 (16M/8 = 0.5 microseconds per tick)
-    Therefore, the timer interval can range from 0.5 to 128 microseconds
-    depending on the reset value (255 to 0)
-    TIMER_CONFIG_NORMAL(); // ==> ({ TCCR2A = _BV(WGM21); TCCR2B = _BV(CS20); OCR2A = TIMER_COUNT_TOP; TCNT2 = 0; })
-    Timer2 Overflow Interrupt Enable
-    TIMER_ENABLE_INTR; ==> (TIMSK2 = _BV(OCIE2A))
-    TIMER_RESET; // ==> ∅
-    sei();  // enable interrupts
-    */
-
-    // let timer2: arduino_uno::pac::TC2 = dp.TC2;
-    // avr_device::interrupt::free(|_cs| {
-    //     // // Configure the timer in a "Critical Section" (interrupts disabled)
-    //     // // -----------------------------
-    //     // // TIMER_CONFIG_NORMAL();
-    //     // // let timer2: arduino_uno::pac::TC2 = dp.TC2;
-    //     // // Timer/Counter2 Control Register A: TCCR2A = _BV(WGM21)
-    //     // // timer2.tccr2a.write(|w| w.wgm2().pwm_fast()); // FIXME: Is it really pwm_fast()?
-    //     // // Timer/Counter2 Control Register B: TCCR2B = _BV(CS20)
-    //     // timer2.tccr2b.write(|w| w.cs2().prescale_8());
-    //     // // Timer/Counter2 Output Compare Register A: OCR2A = TIMER_COUNT_TOP
-    //     // // timer2.ocr2a.write(|w| w.bits()) // FIXME: Required?
-    //     // // Timer/Counter2: TCNT2 = 0
-    //     // timer2.tcnt2.write(|w| unsafe { w.bits(0) });
-    //     // // -----------------------------
-    //     // // Timer2 Overflow Interrupt Enable
-    //     // // TIMER_ENABLE_INTR; ==> (TIMSK2 = _BV(OCIE2A))
-    //     // timer2.timsk2.write(|w| w.ocie2a().bit(true));
-    //     // // -----------------------------
-
-    //     unsafe {
-    //         TIMER.replace(timer2);
-    //     }
-    // });
-    // ================================================================================
-
     // https://jott.se/blog/infrared/
     let ir_receiver: PeriodicReceiver<Nec, PD2<Input<Floating>>> =
         PeriodicReceiver::new(pins.d2, IR_SAMPLERATE);
-
-    // ufmt::uwriteln!(&mut serial, "Arduino Uno initialized, looping...").void_unwrap();
-    // loop {
-    //     // ufmt::uwriteln!(&mut serial, "Loop...").void_unwrap();
-    //     if let Ok(Some(cmd)) = ir_receiver.poll() {
-    //         // ufmt::uwriteln!(&mut serial, "{:?}", cmd.bits).void_unwrap();
-    //         uwriteln!(&mut serial, "{:?} {:?} {:?}", cmd.addr, cmd.cmd, cmd.repeat).void_unwrap();
-    //         // ufmt::uwriteln!(&mut serial, "{:?} {:?}", cmd.address(), cmd.command(),).void_unwrap();
-    //     }
-
-    //     // 20 kHz == period of 50 mus
-    //     // The delay between polling must match the receiver's sample rate
-    //     arduino_uno::delay_us(50);
-    // }
 
     avr_device::interrupt::free(|_cs| unsafe {
         RECEIVER.replace(ir_receiver);
