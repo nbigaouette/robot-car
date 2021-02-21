@@ -190,6 +190,10 @@ fn init_timer_tc0(tc0: arduino_uno::pac::TC0) {
 
 #[avr_device::interrupt(atmega328p)]
 fn TIMER0_COMPA() {
+    read_ir();
+}
+
+fn read_ir() {
     avr_device::interrupt::free(|_cs| {
         let receiver = unsafe { RECEIVER.as_mut().unwrap() };
         let serial = unsafe { SERIAL.as_mut().unwrap() };
