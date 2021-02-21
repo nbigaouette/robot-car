@@ -79,9 +79,7 @@ fn main() -> ! {
             // the ownership is moved by writing explicitly input, output is enforced at compile time,
             pins.d0,
             pins.d1.into_output(&pins.ddr),
-            // other well known baud rates are possible (9600)
             57600.into_baudrate(),
-            // 9600.into_baudrate(),
         );
 
     avr_device::interrupt::free(|_cs| unsafe {
@@ -162,22 +160,11 @@ fn main() -> ! {
     unsafe { avr_device::interrupt::enable() };
 
     loop {
-        // 20 kHz == period of 50 mus
-        // The delay between polling must match the receiver's sample rate
-        arduino_uno::delay_us(50);
+        // The timer will trigger an interrupt at 20 kHz where the IR will be received,
+        // so nothing to do here.
+        continue;
     }
 }
-
-// // See https://blog.rahix.de/005-avr-hal-millis/
-// fn read_ir() {
-//     // 1. Save the current interrupt state (whether interrupts are enabled or disabled)
-//     // 2. Disable interrupts with a cli instruction
-//     // 4. Restore interrupt state
-//     avr_device::interrupt::free(|_cs| {
-//         // TODO: Magic
-//         unimplemented!()
-//     })
-// }
 
 fn init_timer(tc0: arduino_uno::pac::TC0) {
     // https://github.com/Rahix/avr-hal/blob/bfc950428919af96030e66e9b44af2b4574a1ec1/boards/arduino-uno/examples/uno-millis.rs#L36-L54
