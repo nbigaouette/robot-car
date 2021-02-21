@@ -91,7 +91,7 @@ fn main() -> ! {
     // let mut led = pins.d13.into_output(&pins.ddr);
     // led.set_high().void_unwrap();
 
-    init_timer(dp.TC0);
+    init_timer_tc0(dp.TC0);
 
     // ================================================================================
     /*
@@ -166,7 +166,7 @@ fn main() -> ! {
     }
 }
 
-fn init_timer(tc0: arduino_uno::pac::TC0) {
+fn init_timer_tc0(tc0: arduino_uno::pac::TC0) {
     // https://github.com/Rahix/avr-hal/blob/bfc950428919af96030e66e9b44af2b4574a1ec1/boards/arduino-uno/examples/uno-millis.rs#L36-L54
 
     // Configure the timer for the above interval (in CTC mode)
