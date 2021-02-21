@@ -91,7 +91,8 @@ fn main() -> ! {
     // let mut led = pins.d13.into_output(&pins.ddr);
     // led.set_high().void_unwrap();
 
-    init_timer_tc0(dp.TC0);
+    // init_timer_tc0(dp.TC0);
+    init_timer_tc2(dp.TC2);
 
     // https://jott.se/blog/infrared/
     let ir_receiver: PeriodicReceiver<Nec, PD2<Input<Floating>>> =
@@ -131,6 +132,44 @@ fn init_timer_tc0(tc0: arduino_uno::pac::TC0) {
     // avr_device::interrupt::free(|cs| {
     //     MILLIS_COUNTER.borrow(cs).set(0);
     // });
+}
+
+/// From IRremote.cpp, line 276
+///
+/// ```text
+/// cli();
+/// setup pulse clock timer interrupt
+/// Prescale /8 (16M/8 = 0.5 microseconds per tick)
+/// Therefore, the timer interval can range from 0.5 to 128 microseconds
+/// depending on the reset value (255 to 0)
+/// TIMER_CONFIG_NORMAL(); // ==> ({ TCCR2A = _BV(WGM21); TCCR2B = _BV(CS20); OCR2A = TIMER_COUNT_TOP; TCNT2 = 0; })
+/// Timer2 Overflow Interrupt Enable
+/// TIMER_ENABLE_INTR; ==> (TIMSK2 = _BV(OCIE2A))
+/// TIMER_RESET; // ==> ∅
+/// sei();  // enable interrupts
+/// ```
+fn init_timer_tc2(timer2: arduino_uno::pac::TC2) {
+    // Timer/Counter2 Control Register A: TCCR2A = _BV(WGM21)
+    // FIXME: Is it really pwm_fast()?
+    timer2.tccr2a.write(|w| w.wgm2().pwm_fast());
+    // Timer/Counter2 Control Register B: TCCR2B = _BV(CS20)
+    timer2.tccr2b.write(|w| match PRESCALER {
+        8 => w.cs2().prescale_8(),
+        64 => w.cs2().prescale_64(),
+        256 => w.cs2().prescale_256(),
+        1024 => w.cs2().prescale_1024(),
+        _ => panic!(),
+    });
+    // Timer/Counter2 Output Compare Register A: OCR2A = TIMER_COUNT_TOP
+    timer2
+        .ocr2a
+        .write(|w| unsafe { w.bits(TIMER_COUNTS as u8) });
+    // Timer/Counter2: TCNT2 = 0
+    timer2.tcnt2.write(|w| unsafe { w.bits(0) });
+    // -----------------------------
+    // Timer2 Overflow Interrupt Enable
+    // TIMER_ENABLE_INTR; ==> (TIMSK2 = _BV(OCIE2A))
+    timer2.timsk2.write(|w| w.ocie2a().bit(true));
 }
 
 #[avr_device::interrupt(atmega328p)]
