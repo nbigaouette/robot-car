@@ -82,9 +82,8 @@ dependencies = [
 
 [[package]]
 name = "infrared"
-version = "0.10.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9e274583c86fb45108e18483e0845691f2e3ed2d73e16dc4b4153dd9483d405e"
+version = "0.11.0"
+source = "git+https://github.com/jkristell/infrared?branch=next#4501b096c2917b00bcad4620d0d70ebe1bf34a20"
 dependencies = [
  "embedded-hal",
  "nb 1.0.0",
@@ -170,6 +169,7 @@ name = "spot"
 version = "0.1.0"
 dependencies = [
  "arduino-uno",
+ "avr-device",
  "infrared",
  "panic-halt",
  "ufmt",
