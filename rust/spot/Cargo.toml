@@ -13,8 +13,13 @@ panic-halt = "0.2.0"
 
 ufmt = "0.1"
 
-infrared = "0.10"
+# Patched in ../Cargo.toml
+infrared = "0.11"
 
 [dependencies.arduino-uno]
 git = "https://github.com/rahix/avr-hal"
 rev = "b1aedf8"
+
+[dependencies.avr-device]
+version = "0.3"
+features = ["atmega328p"]
